@@ -8,6 +8,7 @@ public class LoginConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         System.out.println("view=====111=======222");
+        System.out.println("view=====111=======333");
         registry.addViewController("/").setViewName("login");
         registry.addViewController("/index.html").setViewName("login");
     }
