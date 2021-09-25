@@ -10,6 +10,7 @@ public class LoginConfig implements WebMvcConfigurer {
         System.out.println("view=====111=======222555553");
         System.out.println("view=====111=======333");
         System.out.println("view=====111=======333");
+        System.out.println("view=====111=======333");
         registry.addViewController("/").setViewName("login");
         registry.addViewController("/index.html").setViewName("login");
     }
