@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mybatis.UserMapper">
+    <resultMap id="result" type="com.example.demo.mybatis.User">
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="username" property="userName" jdbcType="VARCHAR"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="VARCHAR"/>
+        <!--<association property="userRole"-->
+                     <!--column="id"-->
+                     <!--select="com.example.demo.mybatis.UserRoleMapper.selectAll">-->
+        <!--</association>-->
+        <association property="userRole" javaType="com.example.demo.mybatis.UserRole">
+            <result property="id" column="id"/>
+            <result property="userId" column="user_id"/>
+            <result property="roleId" column="role_id"/>
+        </association>
+    </resultMap>
+    <sql id="select">
+        ut.id,ut.username,ut.real_name,ut.email
+    </sql>
+    <sql id="update">
+        <set>
+            <if test="userName != null and userName != ''">
+                username = #{userName},
+            </if>
+            <if test="realName != null and realName != ''">
+                real_name = #{realName},
+            </if>
+        </set>
+    </sql>
+    <sql id="condition">
+        <if test="userName != null and userName !=''">
+            username = #{userName}
+        </if>
+    </sql>
+    <select id="queryUser" resultMap="result">
+        select
+        <include refid="select"/>
+        from user_temp
+    </select>
+
+    <select id="selectUserByUser" resultMap="result">
+        select <include refid="select"/> from user_temp
+        <where>
+            <include refid="condition"/>
+        </where>
+    </select>
+    <select id="selectUserByIds" resultMap="result">
+        select <include refid="select"/> from user_temp
+        <where>
+            id in
+            <foreach collection="list" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+    <select id="selectUserByMap" parameterType="map" resultMap="result">
+        select <include refid="select"/> from user_temp
+        <where>
+            <include refid="condition"/>
+        </where>
+    </select>
+    <insert id="userInsert" parameterType="com.example.demo.mybatis.User">
+        <selectKey order="BEFORE" keyProperty="id" resultType="String">
+            select seq_user_temp.nextval from dual
+        </selectKey>
+        insert into user_temp(id,username,real_name) values(#{id},#{userName},#{realName})
+    </insert>
+    <update id="updateUser">
+        update user_temp <include refid="update"/>
+        where id = #{id}
+    </update>
+    <delete id="deleteUser">
+        delete from user_temp
+        where id in
+        <foreach collection="list" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectOne" resultMap="result">
+        select ut.*,urt.* from user_temp ut ,user_role_temp urt
+        where ut.id = urt.user_id and ut.id = #{id}
+    </select>
+</mapper>
