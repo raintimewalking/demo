@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class LoginConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        System.out.println("view=========");
+        System.out.println("view============");
         registry.addViewController("/").setViewName("login");
         registry.addViewController("/index.html").setViewName("login");
     }
