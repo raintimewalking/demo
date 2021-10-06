@@ -1,5 +1,6 @@
 package com.example.demo.mybatis;
 
+import com.example.demo.shiro.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 

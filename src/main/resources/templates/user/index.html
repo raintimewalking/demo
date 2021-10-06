@@ -2,9 +2,13 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
+    <title>user/index</title>
 </head>
 <body>
-indexhello
+user/index
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="注销"/>
+</form>
 </body>
 </html>
