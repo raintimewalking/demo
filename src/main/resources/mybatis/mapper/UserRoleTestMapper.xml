@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.test.UserRoleTestMapper">
+    <resultMap id="result" type="com.example.demo.test.TestUserRole">
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="result">
+        select * from userroletest where id = #{id}
+    </select>
+    <select id="selectListById" resultMap="result">
+        select * from userroletest where id = #{id}
+    </select>
+    <select id="selectByName" resultMap="result">
+        select * from userroletest where name = #{name}
+    </select>
+</mapper>

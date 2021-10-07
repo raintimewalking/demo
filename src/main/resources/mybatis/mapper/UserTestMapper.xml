@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.test.UserTestMapper">
+    <resultMap id="result" type="com.example.demo.test.TestUser">
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="userName" property="userName" jdbcType="VARCHAR"/>
+        <!--单步查询-->
+        <!--<association property="userRole" javaType="com.example.demo.test.TestUserRole">-->
+        <!--<result property="id" column="id"/>-->
+        <!--<result property="name" column="name"/>-->
+        <!--</association>-->
+
+        <!--多步查询-->
+        <!--<association property="userRole" column="id"-->
+        <!--javaType="com.example.demo.test.TestUserRole"-->
+        <!--select="com.example.demo.test.UserRoleTestMapper.selectById"/>-->
+        <!--单步查询-->
+        <collection property="userRole" ofType="com.example.demo.test.TestUserRole">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        </collection>
+        <!--多步查询-->
+        <!--<collection property="userRole" ofType="com.example.demo.test.TestUserRole"-->
+                    <!--column="id" select="com.example.demo.test.UserRoleTestMapper.selectListById"/>-->
+    </resultMap>
+
+
+    <select id="selectById" resultMap="result" parameterType="com.example.demo.test.TestUser">
+        select u.*,ur.name
+        from usertest u,userroletest ur
+        where u.id = #{id} and ur.id = #{id}
+    </select>
+    <!--<select id="selectById" resultMap="result" parameterType="com.example.demo.test.TestUser">-->
+    <!--select * from usertest where id = #{id}-->
+    <!--</select>-->
+</mapper>
